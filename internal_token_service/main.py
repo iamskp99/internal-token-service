@@ -61,14 +61,10 @@ class JwtUtil:
         payload["iat"] = current_time
         payload["exp"] = current_time + timedelta(seconds=expiration_time_in_seconds)
 
-        try:
-            if payload_obj.request_id is None:
-                payload["request_id"] = InternalTokenService.generate_trace_id()
-            else:
-                payload["request_id"] = payload_obj.request_id
-
-        except Exception as e:
+        if "request_id" not in payload:
             payload["request_id"] = InternalTokenService.generate_trace_id()
+        else:
+            pass
 
         return jwt.encode(payload, secret, algorithm="HS256")
 

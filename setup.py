@@ -5,7 +5,7 @@ with open("README.md","r") as f:
 
 setup(
     name='internal_token_service',
-    version='0.2',
+    version='0.3',
     packages=find_packages(),
     install_requires=[
         'PyJWT>=2.9.0'
