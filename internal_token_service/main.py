@@ -9,7 +9,7 @@ class InternalTokenService:
         '''
         :param secret: This parameter receives a key to encrypt the payload data by using SHA256 algorithm.
         :param expiration_time_in_seconds: This parameter receives expiration time in seconds.
-        :param payload_obj: This parameter receives the object whose data has to be encrypted.
+        :param payload_obj: This parameter receives the object whose data has to be encrypted. It should not be None.
         :return: It returns the encoded token.
         '''
         payload = vars(payload_obj)
@@ -60,11 +60,6 @@ class JwtUtil:
 
         payload["iat"] = current_time
         payload["exp"] = current_time + timedelta(seconds=expiration_time_in_seconds)
-
-        if "request_id" not in payload:
-            payload["request_id"] = InternalTokenService.generate_trace_id()
-        else:
-            pass
 
         return jwt.encode(payload, secret, algorithm="HS256")
 
